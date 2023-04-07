@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { UserService } from './user.service';
 
@@ -13,5 +13,14 @@ export class UserController {
     return response
       .status(HttpStatus.CREATED)
       .json({ message: 'Student Created Successfully', newUser });
+  }
+
+  @Get()
+  async getUsers(@Res() response) {
+    const users = await this.userService.getUsers();
+
+    return response.status(HttpStatus.OK).json({
+      users,
+    });
   }
 }
